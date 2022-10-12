@@ -3,18 +3,17 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import json
 
+from products.models import Product
+
 
 def api_home(request, *args, **kwargs):
-    print(request.GET)
-    print(request.POST)
-    body = request.body                     # byte string of Json data
+    model_data = Product.objects.all().order_by("?").first()
     data = {}
-    try:
-        data = json.loads(body)             # String of Json data -> Python Dictionary
-    except:
-        pass
-    print(data.keys())
-    data['params'] = dict(request.GET)
-    data['headers'] = dict(request.headers)   # request.Meta
-    data['content_type'] = request.content_type
+    if model_data:
+        data['title'] = model_data.title
+        data['content'] = model_data.content
+        data['price'] = model_data.price
+        """
+        model instance (model_data) turn a python dict to return Json to client
+        """
     return JsonResponse(data)
