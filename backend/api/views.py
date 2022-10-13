@@ -17,6 +17,6 @@ def api_home(request, *args, **kwargs):
     """
     serializer = ProductSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        # data = serializer.save()
+        instance = serializer.save()
         print(serializer.data)
         return Response(serializer.data)
