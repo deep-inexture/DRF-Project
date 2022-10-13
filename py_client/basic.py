@@ -19,11 +19,11 @@ Content-Type will be application/form-urlencoded
 # get_response_form = requests.get(endpoint, data={'query': 'Hello Form Data!'})
 
 # print(get_response_data.headers)
-# print(get_response_data.text)                                # Print raw text response - Format: Json
+print(get_response_data.text)                                # Print raw text response - Format: Json
 # print(get_response_form.text)                                # Print raw text response - Format: Json
 
 """ Prints item inside data """
-print(get_response_data.json())                              # Print data in form of Python Dict
+# print(get_response_data.json())                              # Print data in form of Python Dict
 """ Prints item inside form """
 # print(get_response_form.json())
 
