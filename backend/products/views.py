@@ -4,7 +4,7 @@ from .models import Product
 from .serializers import ProductSerializer
 
 
-class ProductCreateAPIView(generics.CreateAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -21,5 +21,13 @@ class ProductCreateAPIView(generics.CreateAPIView):
 class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
     # lookup field = 'pk'
+
+"""
+Instead of ListAPIView, we can also regenerate CreateAPIView to ListCreateAPIView 
+In which we can get the data as well we can add the new data
+So, recreating above function.
+"""
+class ProductListAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
