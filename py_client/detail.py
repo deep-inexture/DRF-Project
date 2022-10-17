@@ -1,7 +1,7 @@
 import requests
 
 
-endpoint = 'http://127.0.0.1:8000/api/products/4'                     # Project URL
+endpoint = 'http://127.0.0.1:8000/api/products/10'                     # Project URL
 
 get_response_data = requests.get(endpoint)
 
