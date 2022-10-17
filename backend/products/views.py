@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 # from django.http import Http404
 
+from rest_framework import mixins
+
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
@@ -49,6 +51,26 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
         super().perform_destroy(instance=instance)
 
 
+class ProductMixinView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        # serializer.save(user=self.request.user)
+        title = serializer.validated_data.get('title')
+        content = serializer.validated_data.get('content') or None
+        if content is None:
+            content = "This is sample content added automatically"
+        serializer.save(content=content)
 """
 Instead of ListAPIView, we can also regenerate CreateAPIView to ListCreateAPIView 
 In which we can get the data as well we can add the new data
